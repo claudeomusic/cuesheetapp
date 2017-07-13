@@ -1,9 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import Button from '../Button';
 import Sort from '../Sort';
 import FontAwesome from 'react-fontawesome';
-import {CSVLink, CSVDownload} from 'react-csv';
+import {CSVLink} from 'react-csv';
 
 const isNotAWriter = item => item.roleCde !== 'W'
 const isNotAPublisher = item => item.roleCde !== 'P'
@@ -32,14 +32,12 @@ const CueList = ({
     data.push(["CUE#","CUE/SONG TITLE","COMPOSER(S)","PRO","%","DIRECT PERF LICENSE COMPOSER", "IPI #", "PUBLISHER(S)", "PRO", "%", "DIRECT PERF LICENSE PUBLISHER", "TIME", "TC IN", "TC OUT", "USAGE", "ISWC"]);
     list_of_songs.forEach(obj => 
     {
-      console.log(writers(obj));
-      console.log(publishers(obj));
       let max = writers(obj).length >= publishers(obj).length ? writers(obj).length : publishers(obj).length
       for(let i=0; i < max; i++)
       {
         data.push([
           cueNo, 
-          lastNo == cueNo ? '' : obj.song.workTitle, 
+          lastNo === cueNo ? '' : obj.song.workTitle, 
           writers(obj)[i] ? writers(obj)[i].fullName : '',
           writers(obj)[i] ? writers(obj)[i].societyName : '',
           writers(obj)[i] ? obj.song.totalWriterAscapShare : '',
@@ -122,7 +120,7 @@ const CueList = ({
               </span>
             </div>
             {list.map(item =>
-              <div key={item.song.workID} className="table-row">
+              <div key={item.song.workId} className="table-row">
                 <span style={{width: '20%'}}>
                   {item.song.workTitle}
                 </span>

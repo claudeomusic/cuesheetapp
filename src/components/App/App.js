@@ -27,7 +27,7 @@ class App extends Component {
       sortKey: 'NONE',
       isSortReverse: false,
       cueList: [],
-      hideCues: false
+      hideCues: true
     };
 
     this.needsToSearchRemote = this.needsToSearchRemote.bind(this);
@@ -139,7 +139,6 @@ class App extends Component {
     const {results, cueList} = this.state;
     const {result, page} = results[item.searchKey];
 
-    console.log(item);
     const isNotId = x => x.song.workId !== item.song.workId
     const updatedCueList = cueList.filter(isNotId)
     this.setState({
@@ -150,8 +149,6 @@ class App extends Component {
       [...result,item.song]
       :
       [item.song]
-
-    console.log(updatedHits);
 
     this.setState({
       results: 
