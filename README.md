@@ -6,4 +6,4 @@ This is a working demonstration of a React App to make cue sheet generation easi
 
 ## Demo
 
-Working demo can be seen [here] (http://cuesheet.herokuapp.com/)
+Working demo can be seen [here](http://cuesheet.herokuapp.com/)
