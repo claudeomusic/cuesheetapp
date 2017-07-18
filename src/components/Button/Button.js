@@ -13,19 +13,7 @@ const Button = ({onClick, className,children}) =>
       {children}
     </button>
   );
-}
-
-const withLoading = (Component) => ({isLoading, ...rest}) =>
-  isLoading ? <Loading /> : <Component { ...rest} />
-
-const ButtonWithLoading = withLoading(Button);
-
-const Loading = () =>
-{
-  return (
-    <div>Loading ...</div>
-  );
-}
+};
 
 Button.defaultProps = {
     className: '',
@@ -38,4 +26,3 @@ Button.propTypes = {
 }
 
 export default Button;
-export {ButtonWithLoading};

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Search from '../Search';
 import Table from '../Table';
 import CueList from '../CueList';
-import {ButtonWithLoading} from '../Button';
+import Button from '../Button';
 import './App.css';
 import 
 {
@@ -13,7 +13,19 @@ import
   PARAM_PAGE,
   PARAM_HPP,
   PATH_TAIL
-} from '../Constants'
+} from '../Constants';
+
+const withLoading = (Component) => ({isLoading, ...rest}) =>
+  isLoading ? <Loading /> : <Component { ...rest} />
+
+const ButtonWithLoading = withLoading(Button);
+
+const Loading = () =>
+{
+  return (
+    <div>Loading ...</div>
+  );
+}
 
 class App extends Component {
 
@@ -23,7 +35,7 @@ class App extends Component {
       results: null,
       searchKey: '',
       searchTerm: DEFAULT_QUERY,
-      isLoading: false,
+      isLoading: true,
       sortKey: 'NONE',
       isSortReverse: false,
       cueList: [],
@@ -56,7 +68,7 @@ class App extends Component {
 
   onSearchSubmit(event){
     const { searchTerm} = this.state;
-    this.setState({ searchKey: searchTerm});
+    this.setState({ searchKey: searchTerm, isLoading: true});
     if (this.needsToSearchRemote(searchTerm))
     {
       this.fetchSearchResults(searchTerm, DEFAULT_PAGE);
@@ -80,8 +92,8 @@ class App extends Component {
 
   setSearchResults(response){
     const { result, meta } = response;
-    const { searchKey, results} = this.state
-
+    const { searchKey, results, isLoading} = this.state
+    console.log(isLoading);
     if(result && meta)
     {
       const oldResult = results && results[searchKey]
@@ -104,9 +116,6 @@ class App extends Component {
   }
 
   fetchSearchResults(searchTerm, page) {
-
-    this.setState({isLoading: true});
-
     fetch(`${PATH_BASE}${searchTerm}/?${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}&${PATH_TAIL}`)
     .then(response => response.json())
     .then(result => this.setSearchResults(result));
